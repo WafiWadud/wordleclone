@@ -11,5 +11,5 @@ Arch linux:
 git clone github.com/WafiWadud/wordleclone
 cd wordleclone
 pacman -S aspell-en
-python3 main.py
+python3 -c "import main"
 ```
