@@ -6,28 +6,28 @@ from colorama import Fore, Style, init
 init()
 
 # Load the dictionary into a set for faster lookups
-words = (
+words: list[str] = (
     subprocess.check_output(["aspell", "dump", "-d", "en_US", "master"])
     .decode("utf-8")
     .splitlines()
 )
-five_letter_words = {
+five_letter_words: set[str] = {
     word.lower() for word in words if len(word) == 5 and "'" not in word
 }
 
 
-def get_random_word():
+def get_random_word() -> str:
     """Get a random 5-letter word from the cached list."""
     return random.choice(list(five_letter_words))
 
 
-def is_valid_word(word):
+def is_valid_word(word: str) -> bool:
     """Check if the word is valid using the cached set."""
     return word in five_letter_words
 
 
-def check_guess(guess, target):
-    result = []
+def check_guess(guess: str, target: str) -> str:
+    result: list[str] = []
     for g, t in zip(guess, target):
         if g == t:
             result.append(Fore.GREEN + g)  # Correct letter in the correct position
@@ -38,15 +38,15 @@ def check_guess(guess, target):
     return "".join(result) + Style.RESET_ALL
 
 
-def play_game():
-    target_word = get_random_word()
-    attempts = 0
+def play_game() -> None:
+    target_word: str = get_random_word()
+    attempts: int = 0
     while attempts < 6:
-        guess = input("Enter your guess: ").lower()
+        guess: str = input("Enter your guess: ").lower()
         if not is_valid_word(guess):
             print("That's not a valid word. Please try again.")
             continue
-        result = check_guess(guess, target_word)
+        result: str = check_guess(guess, target_word)
         print(result)
         attempts += 1
         if guess == target_word:
