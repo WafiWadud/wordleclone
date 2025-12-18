@@ -2,14 +2,21 @@ import random
 import subprocess
 from colorama import Fore, Style, init
 
+
+# fjord gucks nymph vibex waltz
 class WordGuessGame:
     def __init__(self):
         # Initialize colorama
         init()
-        
+
         # Load the dictionary into a set for faster lookups
         self._five_letter_words = {
-            word.lower() for word in subprocess.check_output(["aspell", "dump", "-d", "en_US", "master"]).decode("utf-8").splitlines() 
+            word.lower()
+            for word in subprocess.check_output(
+                ["aspell", "dump", "-d", "en_US", "master"]
+            )
+            .decode("utf-8")
+            .splitlines()
             if len(word) == 5 and "'" not in word
         }
 
@@ -48,6 +55,7 @@ class WordGuessGame:
                 break
         else:
             print(f"Game over. The word was {target_word}.")
+
 
 # Create an instance of the game and start playing
 game = WordGuessGame()
